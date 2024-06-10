@@ -28,7 +28,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(erro, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErroResposta> handler(ResourceNotFoundException ex){
         String dataHora = ConversorData.converterDateParaDataHora(new Date());
         ErroResposta erro = new ErroResposta(dataHora, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", ex.getMessage());
