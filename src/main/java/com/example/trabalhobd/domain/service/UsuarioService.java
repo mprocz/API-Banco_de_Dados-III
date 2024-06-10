@@ -8,13 +8,17 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.example.trabalhobd.common.GetCurrentUser;
 import com.example.trabalhobd.domain.dto.usuario.UsuarioRequestDTO;
 import com.example.trabalhobd.domain.dto.usuario.UsuarioResponseDTO;
+import com.example.trabalhobd.domain.exception.BadRequestException;
+import com.example.trabalhobd.domain.exception.ResourceNotFoundException;
 import com.example.trabalhobd.domain.model.Usuario;
 import com.example.trabalhobd.domain.repository.UsuarioRepository;
 
+@Service
 public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioResponseDTO> {
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -33,10 +37,10 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
     public UsuarioResponseDTO obterPorId(Long id) {
         Optional<Usuario> optUsuario = usuarioRepository.findById(id);
         if(optUsuario.isEmpty()){
-            // throw new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id);
+            throw new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id);
         }
         if(GetCurrentUser.getUsuario().getId() != optUsuario.get().getId()){
-            // throw new ResourceNotFoundException("");
+            throw new ResourceNotFoundException("");
         }
         return mapper.map(optUsuario.get(), UsuarioResponseDTO.class);
     }
@@ -46,7 +50,7 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
         verificarDTO(dto);
         Optional<Usuario> optUsuario = usuarioRepository.findByEmail(dto.getEmail());
         if(optUsuario.isPresent()){
-            // throw new BadRequestException("Já existe um usuário com esse email");
+            throw new BadRequestException("Já existe um usuário com esse email");
         }
         Usuario usuario = mapper.map(dto, Usuario.class);
         usuario.setDataCadastro(new Date());
@@ -73,7 +77,7 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
         obterPorId(id);
         Optional<Usuario> optUsuario = usuarioRepository.findById(id);
         if(optUsuario.isEmpty()){
-            // throw new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id);
+            throw new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id);
         }
         Usuario usuario = optUsuario.get();
         usuario.setDataInativacao(new Date());
@@ -82,7 +86,7 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
 
     private void verificarDTO(UsuarioRequestDTO dto){
         if(dto.getEmail() == null || dto.getEmail() == "" || dto.getSenha() == null || dto.getSenha() == ""){
-            // throw new BadRequestException("Email e Senha são obrigatórios");
+            throw new BadRequestException("Email e Senha são obrigatórios");
         }
     }
 }
