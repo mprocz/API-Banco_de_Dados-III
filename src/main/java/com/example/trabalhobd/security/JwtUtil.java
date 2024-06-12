@@ -17,13 +17,16 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {
     @Value("${auth.jwt.secret}")
     private String jwtSecret;
-    @Value("${auth.jwt-expiration-milliseg}")
-    private Long jwtExpirationMilliseg;
+    @Value("${auth.jwt-expiration-millisec}")
+    private Long jwtExpirationMillisec;
 
     public String gerarToken(Authentication authentication){
-        Date dataExpiracao = new Date(new Date().getTime() + jwtExpirationMilliseg);
+        Date dataExpiracao = new Date(new Date().getTime() + jwtExpirationMillisec);
         Usuario usuario = (Usuario) authentication.getPrincipal();
         try{
+            if(usuario.getDataInativacao() != null){
+                return "";
+            }
             Key secretKey = Keys.hmacShaKeyFor(jwtSecret.getBytes("UTF-8"));
             return Jwts.builder().setSubject(usuario.getUsername()).setIssuedAt(new Date()).setExpiration(dataExpiracao).signWith(secretKey).compact();
         }catch(Exception e){

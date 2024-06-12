@@ -38,7 +38,7 @@ public class FilmeService implements ICRUDService<FilmeRequestDTO, FilmeResponse
         }
         Usuario usuario = GetCurrentUser.getUsuario();
         if(optFilme.get().getUsuario().getId() != usuario.getId()){
-            throw new ResourceNotFoundException("O titulo com o Id:" + id +" Não existe");
+            throw new ResourceNotFoundException("O titulo com o Id: " + id +" Não existe");
         }
         return mapper.map(optFilme.get(), FilmeResponseDTO.class);
     }
