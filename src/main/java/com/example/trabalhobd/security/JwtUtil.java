@@ -24,6 +24,9 @@ public class JwtUtil {
         Date dataExpiracao = new Date(new Date().getTime() + jwtExpirationMillisec);
         Usuario usuario = (Usuario) authentication.getPrincipal();
         try{
+            if(usuario.getDataInativacao() != null){
+                return "";
+            }
             Key secretKey = Keys.hmacShaKeyFor(jwtSecret.getBytes("UTF-8"));
             return Jwts.builder().setSubject(usuario.getUsername()).setIssuedAt(new Date()).setExpiration(dataExpiracao).signWith(secretKey).compact();
         }catch(Exception e){
