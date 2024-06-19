@@ -1,7 +1,15 @@
 package com.example.trabalhobd.domain.model;
 
+import java.util.List;
+
+import com.example.trabalhobd.domain.Enum.EGenero;
+
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +40,13 @@ public class Filme {
     @Column(nullable = false)
     private int duracao;
 
-    private String genero;
+    private int classificacaoIndicativa;
+
+    @ElementCollection(targetClass = EGenero.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "filme_genero", joinColumns = @JoinColumn(name = "idFilme"))
+    @Column(name = "genero")
+    private List<EGenero> genero;
 
     public Long getId() {
         return id;
@@ -90,11 +104,19 @@ public class Filme {
         this.duracao = duracao;
     }
 
-    public String getGenero() {
+    public List<EGenero> getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(List<EGenero> genero) {
         this.genero = genero;
+    }
+
+    public int getClassificacaoIndicativa() {
+        return classificacaoIndicativa;
+    }
+
+    public void setClassificacaoIndicativa(int classificacaoIndicativa) {
+        this.classificacaoIndicativa = classificacaoIndicativa;
     }
 }

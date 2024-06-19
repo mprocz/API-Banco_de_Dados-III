@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.trabalhobd.common.GetCurrentUser;
 import com.example.trabalhobd.domain.dto.usuario.UsuarioRequestDTO;
 import com.example.trabalhobd.domain.dto.usuario.UsuarioResponseDTO;
 import com.example.trabalhobd.domain.exception.BadRequestException;
