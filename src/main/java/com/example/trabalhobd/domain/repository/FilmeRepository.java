@@ -21,7 +21,7 @@ public interface FilmeRepository extends JpaRepository<Filme, Long>{
         @Param("ano") String ano
     );
 
-    @Query(nativeQuery = true, value = "SELECT * FROM public.filme f JOIN public.filme_genero fg ON f.id_filme = fg.id_filme WHERE fg.genero = :genero;")
+    @Query(nativeQuery = true, value = "select f.*, fg.genero from public.filme f join public.filme_genero fg on f.id_filme=fg.id_filme where fg.genero=:genero")
     List<Filme> obterFilmesPorGenero(
         @Param("genero") String genero
     );
