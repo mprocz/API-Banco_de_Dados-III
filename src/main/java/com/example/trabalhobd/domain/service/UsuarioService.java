@@ -38,10 +38,6 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
         if(optUsuario.isEmpty()){
             throw new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id);
         }
-        // se pode obter todos, não tem sentido bloquear de obter por id
-        // if(GetCurrentUser.getUsuario().getId() != optUsuario.get().getId()){
-        //     throw new ResourceNotFoundException("Usuário com o id: " + id + " não é acessível");
-        // }
         return mapper.map(optUsuario.get(), UsuarioResponseDTO.class);
     }
 
