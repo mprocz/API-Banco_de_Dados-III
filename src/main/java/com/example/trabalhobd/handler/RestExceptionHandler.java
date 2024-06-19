@@ -15,23 +15,23 @@ import com.example.trabalhobd.domain.model.ErroResposta;
 @ControllerAdvice
 public class RestExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErroResposta> handlerResourceNotFoundException(ResourceNotFoundException ex){
+    public ResponseEntity<ErroResposta> handlerResourceNotFoundExcpetion(ResourceNotFoundException ex){
         String dataHora = ConversorData.converterDateParaDataHora(new Date());
         ErroResposta erro = new ErroResposta(dataHora, HttpStatus.NOT_FOUND.value(), "NOT FOUND", ex.getMessage());
         return new ResponseEntity<>(erro, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErroResposta> handlerBadException(ResourceNotFoundException ex){
+    public ResponseEntity<ErroResposta> handlerBadRequestException(BadRequestException ex){
         String dataHora = ConversorData.converterDateParaDataHora(new Date());
         ErroResposta erro = new ErroResposta(dataHora, HttpStatus.BAD_REQUEST.value(), "Bad Request", ex.getMessage());
-        return new ResponseEntity<>(erro, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErroResposta> handler(ResourceNotFoundException ex){
+    public ResponseEntity<ErroResposta> handlerException(Exception ex){
         String dataHora = ConversorData.converterDateParaDataHora(new Date());
         ErroResposta erro = new ErroResposta(dataHora, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", ex.getMessage());
-        return new ResponseEntity<>(erro, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(erro, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.trabalhobd.common.GetCurrentUser;
+import com.example.trabalhobd.domain.Enum.EGenero;
 import com.example.trabalhobd.domain.dto.filme.FilmeRequestDTO;
 import com.example.trabalhobd.domain.dto.filme.FilmeResponseDTO;
 import com.example.trabalhobd.domain.exception.ResourceNotFoundException;
@@ -45,7 +46,6 @@ public class FilmeService implements ICRUDService<FilmeRequestDTO, FilmeResponse
 
     @Override
     public FilmeResponseDTO cadastrar(FilmeRequestDTO dto) {
-        //System.out.println("tainha");
         Filme filme = mapper.map(dto, Filme.class);
         Usuario usuario = GetCurrentUser.getUsuario();
         filme.setUsuario(usuario);

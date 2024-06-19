@@ -38,7 +38,6 @@ public class FilmeController {
 
     @PostMapping
     public ResponseEntity<FilmeResponseDTO> cadastrar(@RequestBody FilmeRequestDTO dto) {
-        //System.out.println("ola marilene");
         FilmeResponseDTO filme = service.cadastrar(dto);
         return new ResponseEntity<>(filme, HttpStatus.CREATED);
     }
