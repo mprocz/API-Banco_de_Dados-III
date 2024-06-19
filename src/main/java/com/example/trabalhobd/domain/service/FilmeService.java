@@ -45,6 +45,7 @@ public class FilmeService implements ICRUDService<FilmeRequestDTO, FilmeResponse
 
     @Override
     public FilmeResponseDTO cadastrar(FilmeRequestDTO dto) {
+        //System.out.println("tainha");
         Filme filme = mapper.map(dto, Filme.class);
         Usuario usuario = GetCurrentUser.getUsuario();
         filme.setUsuario(usuario);
@@ -70,4 +71,18 @@ public class FilmeService implements ICRUDService<FilmeRequestDTO, FilmeResponse
         repository.deleteById(id);
     }
 
+    public List<FilmeResponseDTO> obterPorClassificacaoIndicativa(String periodoInicial, String periodoFinal){
+        List<Filme> titulos = repository.obterFilmesPorClassificacaoIndicativa(periodoInicial, periodoFinal);
+        return titulos.stream().map(filme -> mapper.map(filme, FilmeResponseDTO.class)).collect(Collectors.toList());
+    }
+
+    public List<FilmeResponseDTO> obterPorAno(String ano){
+        List<Filme> titulos = repository.obterFilmesPorAno(ano);
+        return titulos.stream().map(filme -> mapper.map(filme, FilmeResponseDTO.class)).collect(Collectors.toList());
+    }
+
+    public List<FilmeResponseDTO> obterPorGenero(String genero){
+        List<Filme> titulos = repository.obterFilmesPorGenero(genero);
+        return titulos.stream().map(filme -> mapper.map(filme, FilmeResponseDTO.class)).collect(Collectors.toList());
+    }
 }

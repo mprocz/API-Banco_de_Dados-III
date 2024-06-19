@@ -5,6 +5,7 @@ public class UsuarioRequestDTO {
     private String email;
     private String senha;
     private String foto;
+    private int idade;
     
     public String getNome() {
         return nome;
@@ -29,5 +30,11 @@ public class UsuarioRequestDTO {
     }
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+    public int getIdade() {
+        return idade;
+    }
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 }

@@ -1,12 +1,17 @@
 package com.example.trabalhobd.domain.dto.filme;
 
+import java.util.List;
+
+import com.example.trabalhobd.domain.Enum.EGenero;
+
 public class FilmeRequestDTO {
     private String titulo;
     private String autor;
     private String produtor;
-    private int duracao;
     private int ano;
-    private String genero;
+    private int duracao;
+    private int classificacaoIndicativa;
+    private List<EGenero> genero;
     
     public String getTitulo() {
         return titulo;
@@ -38,10 +43,16 @@ public class FilmeRequestDTO {
     public void setAno(int ano) {
         this.ano = ano;
     }
-    public String getGenero() {
+    public List<EGenero> getGenero() {
         return genero;
     }
-    public void setGenero(String genero) {
+    public void setGenero(List<EGenero> genero) {
         this.genero = genero;
+    }
+    public int getClassificacaoIndicativa() {
+        return classificacaoIndicativa;
+    }
+    public void setClassificacaoIndicativa(int classificacaoIndicativa) {
+        this.classificacaoIndicativa = classificacaoIndicativa;
     }
 }
